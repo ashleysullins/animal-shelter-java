@@ -1,5 +1,6 @@
 import java.sql.Date;
 import java.util.List;
+import java.time.LocalDate;
 import org.sql2o.*;
 
 public class Animal {
@@ -13,10 +14,13 @@ public class Animal {
   private int customer_id;
   private String path_to_photo;
 
-  public Animal(String name, String gender, int age) {
+  public Animal(String name, String gender, int age, int breed_id, int species_id, LocalDate date_of_admission) {
     this.name = name;
     this.gender = gender;
     this.age = age;
+    this.breed_id = breed_id;
+    this.species_id = species_id;
+    this.date_of_admission = java.sql.Date.valueOf(date_of_admission);
   }
 
   public int getId() {
@@ -35,24 +39,16 @@ public class Animal {
     return age;
   }
 
-  public void setBreed(int breed_id) {
-    this.breed_id = breed_id;
-  }
-
   public int getBreed() {
     return breed_id;
-  }
-
-  public void setSpecies(int species_id) {
-    this.species_id = species_id;
   }
 
   public int getSpecies() {
     return species_id;
   }
 
-  public void setPhotoPath(String path_to_photo) {
-    this.path_to_photo = path_to_photo;
+  public void setPhotoPath() {
+    this.path_to_photo = "/resources/img/" + name + ".jpg";
   }
 
   public String getPhotoPath() {
