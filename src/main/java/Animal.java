@@ -1,6 +1,9 @@
 import java.sql.Date;
+import java.util.List;
+import org.sql2o.*;
 
 public class Animal {
+  private int id;
   private String name;
   private String gender;
   private int age;
@@ -14,6 +17,10 @@ public class Animal {
     this.name = name;
     this.gender = gender;
     this.age = age;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -51,4 +58,37 @@ public class Animal {
   public String getPhotoPath() {
     return path_to_photo;
   }
+
+  public static List<Animal> all() {
+    String sql = "SELECT * FROM animal";
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Animal.class);
+    }
+  }
+
+  public void save() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO animal (name, gender, age) VALUES (:name, :gender, :age)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", name)
+        .addParameter("gender", gender)
+        .addParameter("age", age)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  @Override
+  public boolean equals (Object otherAnimal) {
+    if (!(otherAnimal instanceof Animal)) {
+      return false;
+    } else {
+      Animal newAnimal = (Animal) otherAnimal;
+      return this.getName().equals(newAnimal.getName()) &&
+        this.getGender().equals(newAnimal.getGender()) &&
+        this.getAge() == newAnimal.getAge() &&
+        this.getId() == newAnimal.getId();
+    }
+  }
+
 }
