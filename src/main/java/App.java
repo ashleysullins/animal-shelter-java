@@ -12,20 +12,35 @@ public class App {
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String,Object>();
       model.put("template", "templates/home.vtl");
+      model.put("animals", Animal.all());
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/results", (request, response) -> {
+    get("/admin", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/results.vtl");
-
-      //Variables that you'd like to call on each page go here
+      model.put("template", "templates/admin.vtl");
 
       return new ModelAndView(model, layout);
-
-
     }, new VelocityTemplateEngine());
+
+  //   post("/add-animal", (request, response) -> {
+  //     Map<String, Object> model = new HashMap<String,Object>();
+  //     model.put("template", "templates/home.vtl");
+  //
+  //     String name = request.queryParams("animalName");
+  //     String gender = request.queryParams("animalGender");
+  //     int age = Integer.parseInt(request.queryParams("animalAge"));
+  //     int breed_id = Integer.parseInt(request.queryParams("animalBreed"));
+  //     int species_id = Integer.parseInt(request.queryParams("species"));
+  //
+  //     Animal newAnimal = new Animal(name, gender, age);
+  //     newAnimal.save();
+  //     newAnimal.setBreed(breed_id);
+  //     newAnimal.setSpecies(species_id);
+  //
+  //     return new ModelAndView(model, layout);
+  //   }, new VelocityTemplateEngine());
   }
 
   //Algorithm goes here

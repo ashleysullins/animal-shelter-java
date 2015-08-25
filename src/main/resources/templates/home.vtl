@@ -1,8 +1,14 @@
-<h1>Header Goes Here</h1>
-<form action='/results' method='get'>
-  <div class="form-group">
-    <input id="form_id" name="form_name" class="form-control" type="text">
-  </div>
+<h1>Portland Animal Shelter</h1>
 
-      <button type="submit" class="btn btn-info">Submit!</button>
-</form>
+<div class="row">
+  #foreach($animal in $animals)
+  <div class="span3">
+    <br>$animal.getPhotoPath() </br>
+    <br>$animal.getName()</br>
+    <br>$animal.getGender()</br>
+    <br>$animal.getAge()</br>
+    <br>$animal.getBreed()</br>
+    <br><a href="/animal/info/:id">$animal.getMoreInfo()</a></br>
+    #end
+  </div>
+</div>
