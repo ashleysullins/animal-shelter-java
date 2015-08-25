@@ -1,4 +1,5 @@
 <form action='/add-animal' method='post'>
+  <input id="animalId" name="animalId" type="hidden" value="$animal.getId()">
   <div class="form-group">
     <input type="text" class="form-control" name="animalName" id="animalName" placeholder="Animal Name">
     <input type="text" class="form-control" name="animalGender" id="animalGender" placeholder="Animal Gender">
