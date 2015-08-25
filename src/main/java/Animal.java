@@ -78,6 +78,16 @@ public class Animal {
     }
   }
 
+  public static Animal find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animal WHERE id=:id";
+      Animal animal = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Animal.class);
+      return animal;
+    }
+  }
+
   @Override
   public boolean equals (Object otherAnimal) {
     if (!(otherAnimal instanceof Animal)) {
@@ -88,6 +98,26 @@ public class Animal {
         this.getGender().equals(newAnimal.getGender()) &&
         this.getAge() == newAnimal.getAge() &&
         this.getId() == newAnimal.getId();
+    }
+  }
+
+  public void update(String newName) {
+    this.name = newName;
+    try (Connection con = DB.sql2o.open()) {
+      String sql ="UPDATE animal SET name=:name WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("name", newName)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void delete() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM animal WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
     }
   }
 
